@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>福岡 & 九州 Super Mario 冒險之旅 V7 (含天氣預報)</title>
+<title>福岡 & 九州 Super Mario 冒險之旅 V8 (精準天氣版)</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -34,12 +34,14 @@
   /* Weather Box */
   .weather-box {
     background: #e1f5fe; border: 3px solid #0288d1; border-radius: 10px;
-    padding: 10px 12px; margin: 15px 15px 0; font-size: 13px; font-weight: 800;
+    padding: 12px; margin: 15px 15px 0; font-size: 13px; font-weight: 800;
     color: #01579b; box-shadow: 3px 3px 0 rgba(2, 136, 209, 0.2);
-    display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;
+    display: flex; flex-direction: column; gap: 8px; line-height: 1.5;
   }
-  .weather-box span { font-size: 18px; }
-  .weather-box strong { color: #d84315; }
+  .weather-main { display: flex; align-items: center; gap: 10px; border-bottom: 1px dashed #0288d1; padding-bottom: 6px; }
+  .weather-main span { font-size: 24px; }
+  .weather-details { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; }
+  .weather-tip { background: #fff; padding: 8px; border-radius: 8px; border-left: 4px solid #d84315; color: #333; }
 
   /* Floating TOP button */
   .floating-btn-top {
@@ -104,16 +106,23 @@
     <div class="day-card" id="day1">
       <div class="day-title-bar"><h2>DAY 1</h2><span>4/23 (THU)</span></div>
       <div class="weather-box">
-        <span>🌤️</span>
-        <div><strong>天氣情報：福岡市區</strong><br>春末夏初氣候溫暖宜人，日間陽光充沛體感可達 25°C。建議穿著薄長袖或短袖恤衫搭配輕便外套。</div>
+        <div class="weather-main"><span>🌤️</span> <strong>福岡市區：春末夏初</strong></div>
+        <div class="weather-details">
+          <div>🌡️ 氣溫：14°C - 22°C</div>
+          <div>💧 體感：陽光下接近 25°C</div>
+          <div>🌂 降雨率：低 (避開梅雨季)</div>
+        </div>
+        <div class="weather-tip">💡 建議：穿著薄長袖或短袖恤衫搭配輕便外套，適合天神、Outlets 戶外活動。</div>
       </div>
-      <div class="day-info"><span class="badge">🏨 泊車：¥1500/晚</span></div>
+      <div class="day-info">
+        <span class="badge">🏨 泊車：¥1500/晚</span>
+      </div>
       <div class="timeline">
         <div class="event"><div class="time">07:00</div><div class="event-content">🚩 <span class="popup-trigger" data-zh="港珠澳大橋澳門口岸" data-ja="港珠澳大橋マカオ口岸" data-addr="澳門大橋畔" data-mc="-">港珠澳大橋澳門口岸</span> <a href="https://www.google.com/maps/search/?api=1&query=%E6%B8%AF%E7%8F%A0%E6%BE%B3%E5%A4%A7%E6%A9%8B%E6%BE%B3%E9%96%80%E5%8F%A3%E5%B2%B8" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚌 交通轉乘約 60 分鐘</div>
         <div class="event"><div class="time">08:00</div>
           <div class="event-content">🅿️ <span class="popup-trigger" data-zh="海天中轉大樓" data-ja="スカイピア (SkyPier)" data-addr="香港國際機場" data-mc="-">海天中轉大樓</span> <a href="https://www.google.com/maps/search/?api=1&query=%E9%A6%99%E6%B8%AF%E5%9C%8B%E9%9A%9B%E6%A9%9F%E5%A0%B4%20%E6%B5%B7%E5%A4%A9%E4%B8%AD%E8%BD%89%E5%A4%A7%E6%A8%93" class="go-link">GO!</a></div>
-          <div class="meal-box"><strong>🍴 早餐</strong>機場內自理</div>
+          <div class="meal-box"><strong>🍴 早餐 (Notebook)</strong><span class="popup-trigger" data-zh="海天中轉大樓" data-ja="スカイピア (SkyPier)" data-addr="香港國際機場" data-mc="-">海天中轉大樓</span> 早餐 (自理)</div>
         </div>
         <div class="drive-time">✈️ 飛行時間約 3.5 小時</div>
         <div class="event"><div class="time">10:55</div><div class="event-content">✈️ UO668 起飛 (HKG ➔ FUK)</div></div>
@@ -130,10 +139,15 @@
     <div class="day-card" id="day2">
       <div class="day-title-bar"><h2>DAY 2</h2><span>4/24 (FRI)</span></div>
       <div class="weather-box">
-        <span>🌬️</span>
-        <div><strong>天氣情報：高山與溫泉區</strong><br>【大吊橋】高海拔風大，體感比市區低 5°C，必備防風外套！<br>【由布院】位處山區，早晚溫差極大，夜晚需注意保暖。</div>
+        <div class="weather-main"><span>🌬️</span> <strong>由布院/別府：山區地勢</strong></div>
+        <div class="weather-details">
+          <div>🌡️ 氣溫：早晚溫差極大</div>
+          <div>🌪️ 風力：吊橋高海拔風力強勁</div>
+          <div>📉 體感：比市區低約 5°C</div>
+        </div>
+        <div class="weather-tip">💡 建議：必備抗風薄外套或輕便夾克。在大吊橋即使市區暖，山上仍偏冷。</div>
       </div>
-      <div class="day-info"><span class="badge yellow">🍴 晚餐：酒店已包</span><span class="badge">🏨 泊車：免費</span></div>
+      <div class="day-info"><span class="badge yellow">🍴 晚餐：由布院燈之宿 (已包)</span><span class="badge">🏨 泊車：免費</span></div>
       <div class="timeline">
         <div class="event"><div class="time">09:00</div><div class="event-content">🏨 離開 福岡蒙特利酒店</div></div>
         <div class="drive-time">🚗 駕車約 1 小時</div>
@@ -141,14 +155,14 @@
         <div class="drive-time">🚗 駕車約 30 分鐘</div>
         <div class="event"><div class="time">12:00</div>
           <div class="event-content">🏘️ <span class="popup-trigger" data-zh="豆田町商店街" data-ja="豆田町商店街" data-addr="大分県日田市豆田町" data-mc="202 816 572*34">豆田町商店街</span> <a href="https://www.google.com/maps/search/?api=1&query=%E8%B1%86%E7%94%B0%E7%94%BA%E5%95%86%E5%BA%97%E8%A1%97" class="go-link">GO!</a></div>
-          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>日田まぶし千屋 鰻魚飯</div>
+          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>日田豆田町 (鰻魚飯)</div>
         </div>
         <div class="drive-time">🚗 駕車約 45 分鐘</div>
         <div class="event"><div class="time">14:30</div><div class="event-content">🌉 <span class="popup-trigger" data-zh="九重夢大吊橋" data-ja="九重“夢”大吊橋" data-addr="大分県玖珠郡九重町大字田野1208番地" data-mc="269 012 156">九重夢大吊橋</span> <a href="https://www.google.com/maps/search/?api=1&query=%E4%B9%9D%E9%87%8D%E5%A4%A2%E5%A4%A7%E5%90%8A%E6%A9%8B" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚗 駕車約 40 分鐘</div>
         <div class="event"><div class="time">16:30</div>
           <div class="event-content">🏨 <span class="popup-trigger" data-zh="由布院燈之宿" data-ja="湯布院らんぷの宿" data-addr="大分県由布市湯布院町川上3639-1" data-mc="269 357 441*14">由布院燈之宿</span> <a href="https://www.google.com/maps/search/?api=1&query=%E7%94%B1%E5%B8%83%E9%99%A2%20%E7%87%88%E3%81%AE%E5%AE%BF" class="go-link">GO!</a></div>
-          <div class="meal-box"><strong>🍴 晚餐 (酒店已包)</strong>於燈之宿享用</div>
+          <div class="meal-box"><strong>🍴 晚餐 (由布院燈之宿)</strong>酒店包含晚餐</div>
         </div>
       </div>
     </div>
@@ -157,21 +171,26 @@
     <div class="day-card" id="day3">
       <div class="day-title-bar"><h2>DAY 3</h2><span>4/25 (SAT)</span></div>
       <div class="weather-box">
-        <span>🌫️</span>
-        <div><strong>天氣情報：由布院與別府</strong><br>清晨的金鱗湖因湖水與冷空氣溫差易出現晨霧。散步及前往海地獄時，記得帶上針織衫或連帽衛衣防風。</div>
+        <div class="weather-main"><span>🌫️</span> <strong>金鱗湖：晨霧奇觀</strong></div>
+        <div class="weather-details">
+          <div>🌡️ 氣溫：清晨與深夜較涼</div>
+          <div>💧 濕度：湖區濕度較高</div>
+          <div>👓 景觀：清晨易現晨霧</div>
+        </div>
+        <div class="weather-tip">💡 建議：在湯之平或海地獄散步需準備針織衫或薄連帽衛衣。</div>
       </div>
-      <div class="day-info"><span class="badge yellow">🍴 早餐：酒店已包</span><span class="badge">🏨 泊車：免費</span></div>
+      <div class="day-info"><span class="badge yellow">🍴 早餐：由布院燈之宿 (已包)</span><span class="badge">🏨 泊車：免費</span></div>
       <div class="timeline">
         <div class="event"><div class="time">09:00</div>
           <div class="event-content">🏨 離開 由布院燈之宿</div>
-          <div class="meal-box"><strong>🍴 早餐 (酒店已包)</strong>於燈之宿享用</div>
+          <div class="meal-box"><strong>🍴 早餐 (由布院燈之宿)</strong>酒店包含早餐</div>
         </div>
         <div class="drive-time">🚗 駕車約 5 分鐘</div>
         <div class="event"><div class="time">09:30</div><div class="event-content">🛍️ <span class="popup-trigger" data-zh="湯之坪街道" data-ja="湯の坪街道" data-addr="大分県由布市湯布院町川上" data-mc="269 359 555*12">湯之坪街道</span> <a href="https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E3%81%AE%E5%9D%AA%E8%A1%97%E9%81%93" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚶 步行約 5 分鐘</div>
         <div class="event"><div class="time">11:30</div>
           <div class="event-content">🥩 <span class="popup-trigger" data-zh="豐後牛釜飯 心" data-ja="由布まぶし 心" data-addr="大分県由布市湯布院町川上1492-1" data-mc="269 359 524*41">豐後牛釜飯 心</span> <a href="https://www.google.com/maps/search/?api=1&query=%E7%94%B1%E5%B8%83%E3%81%BE%E3%81%B6%E3%81%97%20%E5%BF%83" class="go-link">GO!</a></div>
-          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>豐後牛釜飯</div>
+          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>釜飯 (預算 2000 JPY/人)</div>
         </div>
         <div class="drive-time">🚶 步行約 5 分鐘</div>
         <div class="event"><div class="time">12:30</div><div class="event-content">🏞️ <span class="popup-trigger" data-zh="金鱗湖" data-ja="金鱗湖 (きんりんこ)" data-addr="大分県由布市湯布院町川上1561-1" data-mc="269 359 552*31">金鱗湖</span> <a href="https://www.google.com/maps/search/?api=1&query=%E9%87%91%E9%B1%97%E6%B9%96" class="go-link">GO!</a></div></div>
@@ -182,7 +201,7 @@
         <div class="drive-time">🚗 駕車約 15 分鐘</div>
         <div class="event"><div class="time">18:00</div>
           <div class="event-content">🏨 <span class="popup-trigger" data-zh="別邸美湯之宿兩築" data-ja="別邸 美湯の宿 両築" data-addr="大分県別府市観海寺3" data-mc="46 400 488*63">別邸美湯之宿兩築</span> <a href="https://www.google.com/maps/search/?api=1&query=%E5%88%A5%E9%82%B8%20%E7%BE%8E%E6%B9%AF%E3%81%AE%E5%AE%BF%20%E4%B8%A1%E7%AF%89" class="go-link">GO!</a></div>
-          <div class="meal-box"><strong>🍴 晚餐 (參考Notebook)</strong>於兩築酒店內享用</div>
+          <div class="meal-box"><strong>🍴 晚餐 (Notebook)</strong>別邸美湯之宿兩築酒店 晚餐 (自理預算 3000 JPY/人)</div>
         </div>
       </div>
     </div>
@@ -191,28 +210,33 @@
     <div class="day-card" id="day4">
       <div class="day-title-bar"><h2>DAY 4</h2><span>4/26 (SUN)</span></div>
       <div class="weather-box">
-        <span>🌋</span>
-        <div><strong>天氣情報：阿蘇高山</strong><br>阿蘇山區風力強勁，體感偏冷，請備妥擋風外套。若遇濃霧或火山氣體濃度過高，火山口可能會封閉，建議出發前確認。</div>
+        <div class="weather-main"><span>🌋</span> <strong>阿蘇火山：高海拔警報</strong></div>
+        <div class="weather-details">
+          <div>🌡️ 氣溫：全行程體感最冷</div>
+          <div>🌫️ 警告：濃霧或氣體可能封路</div>
+          <div>🌪️ 風力：強勁擋風需求</div>
+        </div>
+        <div class="weather-tip">💡 建議：必帶厚防風外套。出發前請確認火山口即時監測公告。</div>
       </div>
       <div class="day-info"><span class="badge">🏨 泊車：¥1300/晚</span></div>
       <div class="timeline">
         <div class="event"><div class="time">08:00</div>
           <div class="event-content">🏨 酒店出發</div>
-          <div class="meal-box"><strong>🍴 早餐 (參考Notebook)</strong>於酒店內享用</div>
+          <div class="meal-box"><strong>🍴 早餐 (Notebook)</strong>酒店早餐 (自理預算 1000 JPY/人)</div>
         </div>
         <div class="drive-time">🚗 駕車約 1 小時 15 分鐘</div>
         <div class="event"><div class="time">10:00</div><div class="event-content">🌊 <span class="popup-trigger" data-zh="鍋瀑布公園" data-ja="鍋ヶ滝公園" data-addr="熊本県阿蘇郡小国町大字黒渕4101" data-mc="202 139 684">鍋瀑布公園</span> <a href="https://www.google.com/maps/search/?api=1&query=%E9%8D%8B%E3%83%B6%E6%BB%9D%E5%85%AC%E5%9C%92" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚗 駕車約 45 分鐘</div>
         <div class="event"><div class="time">12:00</div>
           <div class="event-content">🍲 <span class="popup-trigger" data-zh="阿蘇 Food Court" data-ja="N/A" data-addr="N/A" data-mc="N/A">阿蘇 Food Court</span></div>
-          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>阿蘇赤牛丼</div>
+          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>Food Court (預算 2000 JPY/人)</div>
         </div>
         <div class="drive-time">🚗 駕車約 30 分鐘</div>
         <div class="event"><div class="time">14:00</div><div class="event-content">🌋 <span class="popup-trigger" data-zh="阿蘇火山" data-ja="阿蘇中岳火口" data-addr="熊本県阿蘇市黒川808" data-mc="256 459 094*34">阿蘇火山</span> / <span class="popup-trigger" data-zh="草千里" data-ja="草千里ヶ浜" data-addr="熊本県阿蘇市赤水1930-1" data-mc="256 456 705*58">草千里</span> <a href="https://www.google.com/maps/search/?api=1&query=%E8%8D%89%E5%8D%83%E9%87%8C%E3%83%B6%E6%B5%9C" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚗 駕車約 1 小時 20 分鐘</div>
         <div class="event"><div class="time">18:00</div>
           <div class="event-content">🏨 <span class="popup-trigger" data-zh="熊本新市街 Candeo" data-ja="カンデオホテルズ熊本新市街" data-addr="熊本県熊本市中央区新市街8-7" data-mc="29 459 660*82">熊本新市街 Candeo</span> <a href="https://www.google.com/maps/search/?api=1&query=Candeo%20Hotels%20Kumamoto%20Shinshigai" class="go-link">GO!</a></div>
-          <div class="meal-box"><strong>🍴 晚餐 (自理)</strong><span class="popup-trigger" data-zh="勝烈亭炸豬扒" data-ja="勝烈亭 新市街本店" data-addr="熊本県熊本市中央区新市街8-18" data-mc="29 459 660*25">勝烈亭炸豬扒</span></div>
+          <div class="meal-box"><strong>🍴 晚餐 (自理)</strong>推薦：<span class="popup-trigger" data-zh="勝烈亭炸豬扒" data-ja="勝烈亭 新市街本店" data-addr="熊本県熊本市中央区新市街8-18" data-mc="29 459 660*25">勝烈亭炸豬扒</span> (預算 4000 JPY/人)</div>
         </div>
       </div>
     </div>
@@ -221,28 +245,33 @@
     <div class="day-card" id="day5">
       <div class="day-title-bar"><h2>DAY 5</h2><span>4/27 (MON)</span></div>
       <div class="weather-box">
-        <span>☀️</span>
-        <div><strong>天氣情報：海濱與市區</strong><br>下午前往糸島海邊，海風較大且陽光直射強烈，適合享受初夏氣息，但請注意防曬。</div>
+        <div class="weather-main"><span>☀️</span> <strong>糸島海濱：防曬重點</strong></div>
+        <div class="weather-details">
+          <div>🌡️ 氣溫：日間暖和</div>
+          <div>🕶️ 光線：海邊紫外線強</div>
+          <div>🌬️ 風力：海風較大</div>
+        </div>
+        <div class="weather-tip">💡 建議：適合享受初夏氣息，但請注意防曬並攜帶輕便外套擋風。</div>
       </div>
       <div class="day-info"><span class="badge">🏨 泊車：¥2000/晚</span></div>
       <div class="timeline">
         <div class="event"><div class="time">08:00</div>
           <div class="event-content">🏨 酒店出發</div>
-          <div class="meal-box"><strong>🍴 早餐 (參考Notebook)</strong>於酒店內享用</div>
+          <div class="meal-box"><strong>🍴 早餐 (Notebook)</strong>酒店早餐 (自理)</div>
         </div>
         <div class="drive-time">🚗 駕車約 1 小時 10 分鐘</div>
         <div class="event"><div class="time">10:30</div><div class="event-content">🛍️ <span class="popup-trigger" data-zh="鳥栖 Outlets" data-ja="鳥栖プレミアム・アウトレット" data-addr="佐賀県鳥栖市弥生が丘8-1" data-mc="37 062 103*23">鳥栖 Outlets</span> <a href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E6%A0%96%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0%E3%83%BB%E3%82%A2%E3%82%A6%E3%83%88%E3%83%AC%E3%83%83%E3%83%88" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚗 駕車約 10 分鐘</div>
         <div class="event"><div class="time">12:30</div>
           <div class="event-content">🍣 <span class="popup-trigger" data-zh="新鳥栖道之市場" data-ja="新鳥栖 道の市場" data-addr="佐賀県鳥栖市蔵上4丁目120" data-mc="37 026 532*74">新鳥栖道之市場</span> <a href="https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E9%B3%A5%E6%A0%96%20%E9%81%93%E3%81%AE%E5%B8%82%E5%A0%B4" class="go-link">GO!</a></div>
-          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>道之市場內海鮮/居酒屋</div>
+          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>新鳥栖道之市場 (預算 3000 JPY/人)</div>
         </div>
         <div class="drive-time">🚗 駕車約 1 小時</div>
         <div class="event"><div class="time">15:00</div><div class="event-content">🏖️ <span class="popup-trigger" data-zh="糸島 (海邊鞦韆)" data-ja="糸島 (二見ヶ浦)" data-addr="福岡県糸島市志摩桜井" data-mc="224 786 160*85">糸島 (海邊鞦韆)</span> <a href="https://www.google.com/maps/search/?api=1&query=%E7%B3%B8%E5%B3%B6" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚗 駕車約 45 分鐘</div>
         <div class="event"><div class="time">18:00</div>
           <div class="event-content">🏨 <span class="popup-trigger" data-zh="福岡索拉利亞西鐵" data-ja="ソラリア西鉄ホテル福岡" data-addr="福岡県福岡市中央区天神2-2-43" data-mc="13 318 411*64">福岡索拉利亞西鐵</span> <a href="https://www.google.com/maps/search/?api=1&query=Solaria%20Nishitetsu%20Hotel%20Fukuoka" class="go-link">GO!</a></div>
-          <div class="meal-box"><strong>🍴 晚餐 (自理)</strong><span class="popup-trigger" data-zh="麺屋 一矢 (中洲)" data-ja="麺屋 一矢 (中洲)" data-addr="福岡県福岡市博多区中洲2-6-12" data-mc="13 319 321*47">麺屋 一矢 (中洲)</span></div>
+          <div class="meal-box"><strong>🍴 晚餐 (自理)</strong>推薦：<span class="popup-trigger" data-zh="麺屋 一矢 (中洲)" data-ja="麺屋 一矢 (中洲)" data-addr="福岡県福岡市博多区中洲2-6-12" data-mc="13 319 321*47">麺屋 一矢 (中洲)</span> (預算 3000 JPY/人)</div>
         </div>
       </div>
     </div>
@@ -251,27 +280,32 @@
     <div class="day-card" id="day6">
       <div class="day-title-bar"><h2>DAY 6</h2><span>4/28 (TUE)</span></div>
       <div class="weather-box">
-        <span>🌸</span>
-        <div><strong>天氣情報：紫藤花滿開</strong><br>天氣爽朗宜人。今日預計為河內藤園「紫藤花」滿開期，陽光充沛，十分適合戶外拍照與散步。</div>
+        <div class="weather-main"><span>🌸</span> <strong>北九州：紫藤花滿開</strong></div>
+        <div class="weather-details">
+          <div>🌡️ 氣溫：14°C - 22°C</div>
+          <div>🌺 景觀：河內藤園滿開期</div>
+          <div>👖 穿著：洋蔥式穿法最優</div>
+        </div>
+        <div class="weather-tip">💡 建議：藤花受氣溫影響，若當年偏暖花期可能提前，出發前一週需再次確認。</div>
       </div>
       <div class="timeline">
         <div class="event"><div class="time">09:00</div>
           <div class="event-content">🏨 酒店出發</div>
-          <div class="meal-box"><strong>🍴 早餐 (參考Notebook)</strong>於酒店內享用</div>
+          <div class="meal-box"><strong>🍴 早餐 (Notebook)</strong>酒店早餐 (自理預算 1000 JPY/人)</div>
         </div>
         <div class="drive-time">🚗 駕車約 1 小時 10 分鐘</div>
         <div class="event"><div class="time">10:30</div><div class="event-content">🌸 <span class="popup-trigger" data-zh="河內藤園" data-ja="河内藤園" data-addr="福岡県北九州市八幡東区河内2-2-48" data-mc="16 124 553*55">河內藤園</span> <a href="https://www.google.com/maps/search/?api=1&query=%E6%B2%B3%E5%86%85%E8%97%A4%E5%9C%92" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚗 駕車約 30 分鐘</div>
         <div class="event"><div class="time">12:00</div>
           <div class="event-content">🍛 門司港或博多</div>
-          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>門司港燒咖哩 / 博多牛腸鍋</div>
+          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>推薦：燒咖哩或牛腸鍋</div>
         </div>
         <div class="drive-time">🚗 駕車約 1 小時 15 分鐘</div>
         <div class="event"><div class="time">14:30</div><div class="event-content">🌷 <span class="popup-trigger" data-zh="海之中道海濱公園" data-ja="海の中道海浜公園" data-addr="福岡県福岡市東区西戸崎18-25" data-mc="13 709 308*68">海之中道海濱公園</span> <a href="https://www.google.com/maps/search/?api=1&query=%E6%B5%B7%E3%81%AE%E4%B8%AD%E9%81%93%E6%B5%B7%E6%B5%9C%E5%85%AC%E5%9C%92" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚗 駕車約 40 分鐘</div>
         <div class="event"><div class="time">18:00</div>
           <div class="event-content">🛍️ 天神地下街購物</div>
-          <div class="meal-box"><strong>🍴 晚餐 (自理)</strong>天神周邊散步美食</div>
+          <div class="meal-box"><strong>🍴 晚餐 (自理)</strong>天神周邊美食 (預算 3000 JPY/人)</div>
         </div>
       </div>
     </div>
@@ -280,24 +314,29 @@
     <div class="day-card" id="day7">
       <div class="day-header day-title-bar" style="background: #000;"><h2>FINAL STAGE</h2><span>4/29 (WED)</span></div>
       <div class="weather-box">
-        <span>🎌</span>
-        <div><strong>天氣情報：昭和之日</strong><br>氣候溫暖。今日為日本黃金週首日，LaLaport 與機場周邊預期車多擠塞，自駕請提早出發以免延誤航班。</div>
+        <div class="weather-main"><span>🎌</span> <strong>黃金週：昭和之日</strong></div>
+        <div class="weather-details">
+          <div>🚥 交通：假期車流顯著增加</div>
+          <div>🛍️ 人潮：LaLaport 人潮多</div>
+          <div>⏱️ 建議：提早出發以免延誤</div>
+        </div>
+        <div class="weather-tip">💡 建議：往機場路段可能車流擁擠，建議提早還車與入油。</div>
       </div>
       <div class="day-info"><span class="badge red">🎌 昭和之日 (假期)</span></div>
       <div class="timeline">
         <div class="event"><div class="time">09:00</div>
           <div class="event-content">🏨 酒店出發</div>
-          <div class="meal-box"><strong>🍴 早餐 (參考Notebook)</strong>於酒店內享用</div>
+          <div class="meal-box"><strong>🍴 早餐 (Notebook)</strong>酒店早餐 (自理預算 1000 JPY/人)</div>
         </div>
         <div class="drive-time">🚗 駕車約 20 分鐘</div>
         <div class="event"><div class="time">11:00</div><div class="event-content">🦖 <span class="popup-trigger" data-zh="LaLaport 福岡" data-ja="三井ショッピングパーク ららぽーと福岡" data-addr="福岡県福岡市博多区那珂6丁目23-1" data-mc="13 234 402*13">LaLaport 福岡</span> <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%89%E3%82%89%E3%81%BD%E3%83%BC%E3%81%A8%E7%A6%8F%E5%B2%A1" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚗 駕車約 20 分鐘</div>
         <div class="event"><div class="time">13:00</div>
           <div class="event-content">🍣 <span class="popup-trigger" data-zh="葫蘆壽司" data-ja="ひょうたん寿司" data-addr="福岡県福岡市中央区天神2-10-20" data-mc="13 318 535*34">葫蘆壽司</span> <a href="https://www.google.com/maps/search/?api=1&query=%E3%81%B2%E3%82%87%E3%81%86%E3%81%9F%E3%82%93%E5%AF%BF%E5%8F%B8" class="go-link">GO!</a></div>
-          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>葫蘆壽司</div>
+          <div class="meal-box"><strong>🍴 午餐 (自理)</strong>葫蘆壽司 (預算參考)</div>
         </div>
         <div class="drive-time">🚗 駕車約 20 分鐘</div>
-        <div class="event"><div class="time">17:00</div><div class="event-content">🏎️ <span class="popup-trigger" data-zh="福岡機場還車" data-ja="タイムズカー 福岡空港店 (返却)" data-addr="福岡県福岡市博多区半道橋2丁目6-36" data-mc="13 324 163*21">福岡機場還車</span> <a href="https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B2%A1%E7%A9%BA%E6%B8%AF%20%E3%82%AC%E3%82%BD%E3%83%AA%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%83%89" class="go-link">GO!</a></div></div>
+        <div class="event"><div class="time">16:45</div><div class="event-content">🏎️ <span class="popup-trigger" data-zh="福岡機場還車" data-ja="タイムズカー 福岡空港店 (返却)" data-addr="福岡県福岡市博多区半道橋2丁目6-36" data-mc="13 324 163*21">福岡機場還車</span> <a href="https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B2%A1%E7%A9%BA%E6%B8%AF%20%E3%82%AC%E3%82%BD%E3%83%AA%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%83%89" class="go-link">GO!</a></div></div>
         <div class="event"><div class="time">20:35</div><div class="event-content">✈️ UO607 起飛 (FUK ➔ HKG)</div></div>
       </div>
     </div>
