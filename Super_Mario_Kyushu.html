@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>福岡 & 九州 Super Mario 冒險之旅 V5</title>
+<title>福岡 & 九州 Super Mario 冒險之旅 V6</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -24,14 +24,23 @@
   .nav-menu { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px 15px; background: var(--grass-green); border-bottom: 5px solid #2d5a00; }
   .nav-btn { background: var(--mario-yellow); border: 3px solid #000; border-radius: 8px; color: #000; text-align: center; text-decoration: none; font-family: 'Press Start 2P', cursive; font-size: 8px; padding: 10px 5px; box-shadow: 3px 3px 0 #8a7300; display: flex; flex-direction: column; align-items: center; justify-content: center; }
   .nav-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #8a7300; }
-  .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+  .container { max-width: 600px; margin: 20px auto; padding: 0 15px; padding-bottom: 80px; }
   
-  /* Day Card & TOP button */
+  /* Day Card */
   .day-card { background: white; border: 4px solid #000; border-radius: 20px; margin-bottom: 40px; overflow: hidden; box-shadow: 8px 8px 0 rgba(0,0,0,0.1); position: relative; }
-  .day-title-bar { background: var(--mario-blue); color: white; padding: 15px; border-bottom: 4px solid #000; display: flex; justify-content: space-between; align-items: center; padding-right: 70px; }
+  .day-title-bar { background: var(--mario-blue); color: white; padding: 15px; border-bottom: 4px solid #000; display: flex; justify-content: space-between; align-items: center; }
   .day-title-bar h2 { font-family: 'Press Start 2P', cursive; font-size: 14px; margin: 0; }
-  .btn-top { position: absolute; top: 12px; right: 10px; background: var(--mario-yellow); color: #000; padding: 6px 8px; border: 3px solid #000; border-radius: 8px; font-family: 'Press Start 2P', cursive; font-size: 8px; text-decoration: none; box-shadow: 2px 2px 0 #8a7300; z-index: 10; display: flex; align-items: center; gap: 4px; }
-  .btn-top:active { transform: translate(2px, 2px); box-shadow: 0 0 0 #8a7300; }
+  
+  /* Floating TOP button */
+  .floating-btn-top {
+    position: fixed; bottom: 20px; right: 20px; background: var(--mario-yellow); color: #000;
+    padding: 12px 15px; border: 4px solid #000; border-radius: 12px;
+    font-family: 'Press Start 2P', cursive; font-size: 10px; text-decoration: none;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.5); z-index: 1000;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .floating-btn-top:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0 rgba(0,0,0,0.5); }
   
   .day-info { background: #fdf6e3; padding: 10px 15px; font-size: 13px; font-weight: bold; border-bottom: 2px dashed #ccc; display: flex; gap: 10px; flex-wrap: wrap; }
   .badge { background: var(--mario-green); color: white; padding: 2px 8px; border-radius: 5px; font-size: 11px; }
@@ -83,7 +92,6 @@
 
     <!-- DAY 1 -->
     <div class="day-card" id="day1">
-      <a href="#top-nav" class="btn-top">⬆️ TOP</a>
       <div class="day-title-bar"><h2>DAY 1</h2><span>4/23 (THU)</span></div>
       <div class="day-info"><span class="badge">🏨 泊車：¥1500/晚</span></div>
       <div class="timeline">
@@ -112,7 +120,6 @@
 
     <!-- DAY 2 -->
     <div class="day-card" id="day2">
-      <a href="#top-nav" class="btn-top">⬆️ TOP</a>
       <div class="day-title-bar"><h2>DAY 2</h2><span>4/24 (FRI)</span></div>
       <div class="day-info"><span class="badge yellow">🍴 晚餐：酒店已包</span><span class="badge">🏨 泊車：免費</span></div>
       <div class="timeline">
@@ -144,7 +151,6 @@
 
     <!-- DAY 3 -->
     <div class="day-card" id="day3">
-      <a href="#top-nav" class="btn-top">⬆️ TOP</a>
       <div class="day-title-bar"><h2>DAY 3</h2><span>4/25 (SAT)</span></div>
       <div class="day-info"><span class="badge yellow">🍴 早餐：酒店已包</span><span class="badge">🏨 泊車：免費</span></div>
       <div class="timeline">
@@ -187,7 +193,6 @@
 
     <!-- DAY 4 -->
     <div class="day-card" id="day4">
-      <a href="#top-nav" class="btn-top">⬆️ TOP</a>
       <div class="day-title-bar"><h2>DAY 4</h2><span>4/26 (SUN)</span></div>
       <div class="day-info"><span class="badge">🏨 泊車：¥1300/晚</span></div>
       <div class="timeline">
@@ -222,7 +227,6 @@
 
     <!-- DAY 5 -->
     <div class="day-card" id="day5">
-      <a href="#top-nav" class="btn-top">⬆️ TOP</a>
       <div class="day-title-bar"><h2>DAY 5</h2><span>4/27 (MON)</span></div>
       <div class="day-info"><span class="badge">🏨 泊車：¥2000/晚</span></div>
       <div class="timeline">
@@ -257,7 +261,6 @@
 
     <!-- DAY 6 -->
     <div class="day-card" id="day6">
-      <a href="#top-nav" class="btn-top">⬆️ TOP</a>
       <div class="day-title-bar"><h2>DAY 6</h2><span>4/28 (TUE)</span></div>
       <div class="timeline">
         <div class="event"><div class="time">09:00</div>
@@ -291,7 +294,6 @@
 
     <!-- DAY 7 -->
     <div class="day-card" id="day7">
-      <a href="#top-nav" class="btn-top">⬆️ TOP</a>
       <div class="day-header day-title-bar" style="background: #000;"><h2>FINAL STAGE</h2><span>4/29 (WED)</span></div>
       <div class="day-info"><span class="badge red">🎌 昭和之日 (假期)</span></div>
       <div class="timeline">
@@ -321,6 +323,12 @@
 
     <div class="footer">THANK YOU MARIO!<br>BUT YOUR VACATION IS JUST BEGINNING!</div>
   </div>
+
+  <!-- Floating TOP Button -->
+  <a href="#top-nav" class="floating-btn-top">
+    <span>⬆️</span>
+    <span>TOP</span>
+  </a>
 
   <!-- Modal -->
   <div id="modal-overlay"></div>
