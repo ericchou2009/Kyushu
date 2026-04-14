@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>福岡 & 九州 Super Mario 冒險之旅 V8 (精準天氣版)</title>
+<title>福岡 & 九州 Super Mario 冒險之旅 V9 (AI 動態天氣版)</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -37,11 +37,16 @@
     padding: 12px; margin: 15px 15px 0; font-size: 13px; font-weight: 800;
     color: #01579b; box-shadow: 3px 3px 0 rgba(2, 136, 209, 0.2);
     display: flex; flex-direction: column; gap: 8px; line-height: 1.5;
+    transition: box-shadow 0.3s ease;
   }
+  .weather-box.loading { opacity: 0.7; }
+  .weather-box.loaded { box-shadow: 0 0 10px var(--mario-yellow); border-color: var(--mario-yellow); }
   .weather-main { display: flex; align-items: center; gap: 10px; border-bottom: 1px dashed #0288d1; padding-bottom: 6px; }
-  .weather-main span { font-size: 24px; }
+  .weather-main span.weather-icon { font-size: 24px; animation: bounce 2s infinite; }
   .weather-details { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; }
   .weather-tip { background: #fff; padding: 8px; border-radius: 8px; border-left: 4px solid #d84315; color: #333; }
+
+  @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-3px);} }
 
   /* Floating TOP button */
   .floating-btn-top {
@@ -69,10 +74,8 @@
   .meal-box { background: #fff9c4; border: 2px solid #fbc02d; border-radius: 10px; padding: 10px; margin-top: 10px; font-size: 14px; }
   .meal-box strong { color: #f57f17; display: block; margin-bottom: 3px; font-size: 13px; }
   
-  /* Drive Time styling */
   .drive-time { margin-left: 48px; margin-bottom: 25px; margin-top: -10px; padding: 4px 10px; background: white; border: 2px dashed var(--mario-blue); border-radius: 12px; font-size: 12px; font-weight: 800; color: var(--mario-blue); display: inline-flex; align-items: center; gap: 6px; box-shadow: 2px 2px 0 rgba(0,0,0,0.05); position: relative; z-index: 5; }
   
-  /* Popup Trigger & Modal */
   .popup-trigger { color: var(--mario-blue); text-decoration: underline; text-decoration-style: dashed; text-decoration-color: var(--mario-red); text-underline-offset: 4px; cursor: pointer; font-weight: 900; }
   #info-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border: 5px solid #000; border-radius: 15px; padding: 20px; z-index: 1000; box-shadow: 10px 10px 0 rgba(0,0,0,0.5); width: 85%; max-width: 320px; }
   #info-modal h3 { margin: 0 0 15px; font-family: 'Press Start 2P', cursive; font-size: 14px; color: var(--mario-red); line-height: 1.4; text-shadow: 1px 1px #000;}
@@ -105,18 +108,15 @@
     <!-- DAY 1 -->
     <div class="day-card" id="day1">
       <div class="day-title-bar"><h2>DAY 1</h2><span>4/23 (THU)</span></div>
-      <div class="weather-box">
-        <div class="weather-main"><span>🌤️</span> <strong>福岡市區：春末夏初</strong></div>
+      <div class="weather-box loading" data-city="Fukuoka" data-context="市區與機場，晚上吃屋台">
+        <div class="weather-main"><span class="weather-icon">⏳</span> <strong class="loc-title">福岡市區：氣象掃描中...</strong></div>
         <div class="weather-details">
-          <div>🌡️ 氣溫：14°C - 22°C</div>
-          <div>💧 體感：陽光下接近 25°C</div>
-          <div>🌂 降雨率：低 (避開梅雨季)</div>
+          <div class="temp-val">🌡️ 氣溫：讀取中...</div>
+          <div class="hum-val">💧 濕度：讀取中...</div>
         </div>
-        <div class="weather-tip">💡 建議：穿著薄長袖或短袖恤衫搭配輕便外套，適合天神、Outlets 戶外活動。</div>
+        <div class="weather-tip">💡 <strong>AI 瑪利歐提示：</strong>等待任天堂氣象中心連線...</div>
       </div>
-      <div class="day-info">
-        <span class="badge">🏨 泊車：¥1500/晚</span>
-      </div>
+      <div class="day-info"><span class="badge">🏨 泊車：¥1500/晚</span></div>
       <div class="timeline">
         <div class="event"><div class="time">07:00</div><div class="event-content">🚩 <span class="popup-trigger" data-zh="港珠澳大橋澳門口岸" data-ja="港珠澳大橋マカオ口岸" data-addr="澳門大橋畔" data-mc="-">港珠澳大橋澳門口岸</span> <a href="https://www.google.com/maps/search/?api=1&query=%E6%B8%AF%E7%8F%A0%E6%BE%B3%E5%A4%A7%E6%A9%8B%E6%BE%B3%E9%96%80%E5%8F%A3%E5%B2%B8" class="go-link">GO!</a></div></div>
         <div class="drive-time">🚌 交通轉乘約 60 分鐘</div>
@@ -138,14 +138,13 @@
     <!-- DAY 2 -->
     <div class="day-card" id="day2">
       <div class="day-title-bar"><h2>DAY 2</h2><span>4/24 (FRI)</span></div>
-      <div class="weather-box">
-        <div class="weather-main"><span>🌬️</span> <strong>由布院/別府：山區地勢</strong></div>
+      <div class="weather-box loading" data-city="Yufu" data-context="高海拔大吊橋與由布院山區，早晚溫差大">
+        <div class="weather-main"><span class="weather-icon">⏳</span> <strong class="loc-title">由布院/別府：氣象掃描中...</strong></div>
         <div class="weather-details">
-          <div>🌡️ 氣溫：早晚溫差極大</div>
-          <div>🌪️ 風力：吊橋高海拔風力強勁</div>
-          <div>📉 體感：比市區低約 5°C</div>
+          <div class="temp-val">🌡️ 氣溫：讀取中...</div>
+          <div class="hum-val">💧 濕度：讀取中...</div>
         </div>
-        <div class="weather-tip">💡 建議：必備抗風薄外套或輕便夾克。在大吊橋即使市區暖，山上仍偏冷。</div>
+        <div class="weather-tip">💡 <strong>AI 瑪利歐提示：</strong>等待任天堂氣象中心連線...</div>
       </div>
       <div class="day-info"><span class="badge yellow">🍴 晚餐：由布院燈之宿 (已包)</span><span class="badge">🏨 泊車：免費</span></div>
       <div class="timeline">
@@ -170,14 +169,13 @@
     <!-- DAY 3 -->
     <div class="day-card" id="day3">
       <div class="day-title-bar"><h2>DAY 3</h2><span>4/25 (SAT)</span></div>
-      <div class="weather-box">
-        <div class="weather-main"><span>🌫️</span> <strong>金鱗湖：晨霧奇觀</strong></div>
+      <div class="weather-box loading" data-city="Beppu" data-context="金鱗湖看晨霧與別府海地獄溫泉區">
+        <div class="weather-main"><span class="weather-icon">⏳</span> <strong class="loc-title">金鱗湖與別府：氣象掃描中...</strong></div>
         <div class="weather-details">
-          <div>🌡️ 氣溫：清晨與深夜較涼</div>
-          <div>💧 濕度：湖區濕度較高</div>
-          <div>👓 景觀：清晨易現晨霧</div>
+          <div class="temp-val">🌡️ 氣溫：讀取中...</div>
+          <div class="hum-val">💧 濕度：讀取中...</div>
         </div>
-        <div class="weather-tip">💡 建議：在湯之平或海地獄散步需準備針織衫或薄連帽衛衣。</div>
+        <div class="weather-tip">💡 <strong>AI 瑪利歐提示：</strong>等待任天堂氣象中心連線...</div>
       </div>
       <div class="day-info"><span class="badge yellow">🍴 早餐：由布院燈之宿 (已包)</span><span class="badge">🏨 泊車：免費</span></div>
       <div class="timeline">
@@ -209,14 +207,13 @@
     <!-- DAY 4 -->
     <div class="day-card" id="day4">
       <div class="day-title-bar"><h2>DAY 4</h2><span>4/26 (SUN)</span></div>
-      <div class="weather-box">
-        <div class="weather-main"><span>🌋</span> <strong>阿蘇火山：高海拔警報</strong></div>
+      <div class="weather-box loading" data-city="Aso" data-context="阿蘇火山與草千里，高海拔風大寒冷">
+        <div class="weather-main"><span class="weather-icon">⏳</span> <strong class="loc-title">阿蘇火山：氣象掃描中...</strong></div>
         <div class="weather-details">
-          <div>🌡️ 氣溫：全行程體感最冷</div>
-          <div>🌫️ 警告：濃霧或氣體可能封路</div>
-          <div>🌪️ 風力：強勁擋風需求</div>
+          <div class="temp-val">🌡️ 氣溫：讀取中...</div>
+          <div class="hum-val">💧 濕度：讀取中...</div>
         </div>
-        <div class="weather-tip">💡 建議：必帶厚防風外套。出發前請確認火山口即時監測公告。</div>
+        <div class="weather-tip">💡 <strong>AI 瑪利歐提示：</strong>等待任天堂氣象中心連線...</div>
       </div>
       <div class="day-info"><span class="badge">🏨 泊車：¥1300/晚</span></div>
       <div class="timeline">
@@ -244,14 +241,13 @@
     <!-- DAY 5 -->
     <div class="day-card" id="day5">
       <div class="day-title-bar"><h2>DAY 5</h2><span>4/27 (MON)</span></div>
-      <div class="weather-box">
-        <div class="weather-main"><span>☀️</span> <strong>糸島海濱：防曬重點</strong></div>
+      <div class="weather-box loading" data-city="Itoshima" data-context="糸島海濱與鳥栖Outlets戶外">
+        <div class="weather-main"><span class="weather-icon">⏳</span> <strong class="loc-title">糸島與鳥栖：氣象掃描中...</strong></div>
         <div class="weather-details">
-          <div>🌡️ 氣溫：日間暖和</div>
-          <div>🕶️ 光線：海邊紫外線強</div>
-          <div>🌬️ 風力：海風較大</div>
+          <div class="temp-val">🌡️ 氣溫：讀取中...</div>
+          <div class="hum-val">💧 濕度：讀取中...</div>
         </div>
-        <div class="weather-tip">💡 建議：適合享受初夏氣息，但請注意防曬並攜帶輕便外套擋風。</div>
+        <div class="weather-tip">💡 <strong>AI 瑪利歐提示：</strong>等待任天堂氣象中心連線...</div>
       </div>
       <div class="day-info"><span class="badge">🏨 泊車：¥2000/晚</span></div>
       <div class="timeline">
@@ -279,14 +275,13 @@
     <!-- DAY 6 -->
     <div class="day-card" id="day6">
       <div class="day-title-bar"><h2>DAY 6</h2><span>4/28 (TUE)</span></div>
-      <div class="weather-box">
-        <div class="weather-main"><span>🌸</span> <strong>北九州：紫藤花滿開</strong></div>
+      <div class="weather-box loading" data-city="Kitakyushu" data-context="北九州河內藤園看紫藤花滿開">
+        <div class="weather-main"><span class="weather-icon">⏳</span> <strong class="loc-title">北九州藤園：氣象掃描中...</strong></div>
         <div class="weather-details">
-          <div>🌡️ 氣溫：14°C - 22°C</div>
-          <div>🌺 景觀：河內藤園滿開期</div>
-          <div>👖 穿著：洋蔥式穿法最優</div>
+          <div class="temp-val">🌡️ 氣溫：讀取中...</div>
+          <div class="hum-val">💧 濕度：讀取中...</div>
         </div>
-        <div class="weather-tip">💡 建議：藤花受氣溫影響，若當年偏暖花期可能提前，出發前一週需再次確認。</div>
+        <div class="weather-tip">💡 <strong>AI 瑪利歐提示：</strong>等待任天堂氣象中心連線...</div>
       </div>
       <div class="timeline">
         <div class="event"><div class="time">09:00</div>
@@ -313,14 +308,13 @@
     <!-- DAY 7 -->
     <div class="day-card" id="day7">
       <div class="day-header day-title-bar" style="background: #000;"><h2>FINAL STAGE</h2><span>4/29 (WED)</span></div>
-      <div class="weather-box">
-        <div class="weather-main"><span>🎌</span> <strong>黃金週：昭和之日</strong></div>
+      <div class="weather-box loading" data-city="Fukuoka" data-context="黃金週首日市區購物與回程去機場">
+        <div class="weather-main"><span class="weather-icon">⏳</span> <strong class="loc-title">黃金週市區：氣象掃描中...</strong></div>
         <div class="weather-details">
-          <div>🚥 交通：假期車流顯著增加</div>
-          <div>🛍️ 人潮：LaLaport 人潮多</div>
-          <div>⏱️ 建議：提早出發以免延誤</div>
+          <div class="temp-val">🌡️ 氣溫：讀取中...</div>
+          <div class="hum-val">💧 濕度：讀取中...</div>
         </div>
-        <div class="weather-tip">💡 建議：往機場路段可能車流擁擠，建議提早還車與入油。</div>
+        <div class="weather-tip">💡 <strong>AI 瑪利歐提示：</strong>等待任天堂氣象中心連線...</div>
       </div>
       <div class="day-info"><span class="badge red">🎌 昭和之日 (假期)</span></div>
       <div class="timeline">
@@ -344,7 +338,6 @@
     <div class="footer">THANK YOU MARIO!<br>BUT YOUR VACATION IS JUST BEGINNING!</div>
   </div>
 
-  <!-- Floating TOP Button -->
   <a href="#top-nav" class="floating-btn-top">
     <span>⬆️</span>
     <span>TOP</span>
@@ -361,6 +354,7 @@
   </div>
 
   <script>
+    // Popup 邏輯
     const triggers = document.querySelectorAll('.popup-trigger');
     const modal = document.getElementById('info-modal');
     const overlay = document.getElementById('modal-overlay');
@@ -390,7 +384,53 @@
     overlay.addEventListener('click', closeModal);
     closeBtn.addEventListener('click', closeModal);
 
+    // AI 天氣獲取邏輯
+    async function updateAIWeather() {
+        const boxes = document.querySelectorAll('.weather-box');
+        
+        for (let box of boxes) {
+            const city = box.getAttribute('data-city');
+            const context = box.getAttribute('data-context');
+            if (!city) continue;
+
+            try {
+                // 注意：這裡假設後端架設在 Vercel 並有 /api/weather 的路由
+                // 如果在本地開啟或尚未部署 Vercel，這裡的 fetch 會失敗並顯示預設備份提示。
+                const response = await fetch(`/api/weather?city=${city}&context=${encodeURIComponent(context)}`);
+                
+                if (!response.ok) throw new Error('API Error');
+                
+                const data = await response.json();
+
+                // 成功獲取資料，更新 UI
+                box.classList.remove('loading');
+                box.classList.add('loaded');
+                
+                const iconMap = {
+                    'Clear': '☀️', 'Clouds': '☁️', 'Rain': '🌧️', 'Drizzle': '🌦️', 'Thunderstorm': '⛈️', 'Snow': '❄️', 'Mist': '🌫️'
+                };
+                const icon = iconMap[data.mainCondition] || '🍄';
+
+                box.querySelector('.weather-icon').innerText = icon;
+                box.querySelector('.weather-icon').style.animation = 'none';
+                box.querySelector('.loc-title').innerText = `${data.cityName}：${data.desc}`;
+                box.querySelector('.temp-val').innerText = `🌡️ 氣溫：${data.temp}°C`;
+                box.querySelector('.hum-val').innerText = `💧 濕度：${data.humidity}%`;
+                box.querySelector('.weather-tip').innerHTML = `💡 <strong>AI 瑪利歐提示：</strong>${data.aiAdvice}`;
+
+            } catch (error) {
+                // 發生錯誤或尚未部署時的本地備份顯示
+                box.querySelector('.weather-icon').innerText = '🍄';
+                box.querySelector('.weather-icon').style.animation = 'none';
+                box.querySelector('.temp-val').innerText = `🌡️ 氣溫：暫無資料`;
+                box.querySelector('.hum-val').innerText = `💧 濕度：暫無資料`;
+                box.querySelector('.weather-tip').innerHTML = `💡 <strong>系統提示：</strong>等待連線至 Vercel 伺服器 (尚未取得 API 資料)。這是一段瑪利歐探險備用提示，請小心駕駛！`;
+            }
+        }
+    }
+
     window.onload = function() {
+      // 1. 日期自動跳轉邏輯
       const today = new Date();
       const year = today.getFullYear();
       const month = today.getMonth() + 1;
@@ -402,6 +442,9 @@
         const element = document.getElementById(targetId);
         if (element) { element.scrollIntoView({ behavior: "smooth" }); }
       }
+      
+      // 2. 觸發 AI 天氣更新
+      updateAIWeather();
     };
   </script>
 </body>
